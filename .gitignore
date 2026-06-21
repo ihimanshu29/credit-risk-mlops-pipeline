@@ -1,0 +1,13 @@
+# Python cache and temporary files
+__pycache__/
+*.pyc
+
+# Logs
+logs/*.log
+
+# Other generated artifacts that are NOT the final model
+# NOTE: Leave artifacts/model_trainer/model.joblib OUT of .gitignore
+
+# IDE files
+.vscode/
+.idea/

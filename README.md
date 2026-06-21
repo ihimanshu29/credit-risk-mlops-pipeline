@@ -1,0 +1,241 @@
+<h1 align="center">🍷 End-to-End Machine Learning Project: Wine Quality Prediction</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" />
+  <img src="https://img.shields.io/badge/Framework-FastAPI-success.svg" />
+  <img src="https://img.shields.io/badge/Docker-Ready-informational.svg" />
+  <img src="https://img.shields.io/badge/Deployed%20on-Render-orange.svg" />
+</p>
+
+<p align="center">
+  <a href="https://e2e-ml.onrender.com/" target="_blank">
+    <img src="https://img.shields.io/badge/🌐%20Live%20App-Click%20Here-brightgreen?style=for-the-badge" />
+  </a>
+  <a href="https://github.com/ihimanshu29/e2e_ML" target="_blank">
+    <img src="https://img.shields.io/badge/🔗%20GitHub%20Repo-e2e__ML-blue?style=for-the-badge" />
+  </a>
+</p>
+
+---
+
+## 🧠 Overview
+
+This project demonstrates a **complete end-to-end Machine Learning workflow**, designed to replicate **industry-grade ML system design and architecture**.
+
+The core objective is to **predict the quality of wine** based on various chemical and physical parameters such as acidity, sugar content, pH, and alcohol levels.  
+It goes far beyond a simple model training exercise — it represents a **production-ready ML pipeline**, from raw data ingestion to deployment.
+
+---
+
+## 🎯 Purpose & Reflection
+
+This project was developed as a **portfolio piece** to showcase:
+- A **realistic, scalable ML architecture** that mirrors how enterprises design data and ML pipelines.
+- A demonstration of **how ML models move from experimentation to production**.
+- Use of **best practices** such as modularization, configuration management, logging, reproducibility, and containerized deployment.
+
+It emphasizes not just model accuracy, but **maintainability, traceability, and real-world readiness** — the true qualities of an industry-level ML project.
+
+---
+
+## ⚙️ Workflow Steps
+
+1. Update configuration files (`config.yaml`, `schema.yaml`, `params.yaml`)
+2. Define entities and data schemas
+3. Configure pipeline stages via `ConfigurationManager`
+4. Implement modular components:
+   - Data Ingestion  
+   - Data Validation  
+   - Data Transformation  
+   - Model Training  
+   - Model Evaluation  
+5. Orchestrate all stages through the pipeline  
+6. Integrate with `main.py` and `wsgi.py` for full end-to-end execution  
+7. Deploy using Docker + Render  
+
+---
+
+## 🧩 Tech Stack
+
+| Category | Tools / Technologies |
+|-----------|----------------------|
+| **Language** | Python 3.8+ |
+| **Framework** | FastAPI |
+| **ML Libraries** | scikit-learn, pandas, numpy, joblib |
+| **Environment** | Conda |
+| **Containerization** | Docker |
+| **Deployment** | Render |
+| **Version Control** | Git, GitHub |
+
+---
+
+## 🐳 Docker Support
+
+This project is fully Dockerized for production-level deployment.
+
+```bash
+# Build Docker image
+docker build -t e2e-ml .
+
+# Run the container
+docker run -p 8082:8082 e2e-ml
+```
+
+---
+
+## 💻 Local Setup
+
+**Step 1: Create Environment**
+```bash
+conda create -n mlproj python=3.8 -y
+conda activate mlproj
+```
+
+**Step 2: Install Requirements**
+```bash
+pip install -r requirements.txt
+```
+
+**Step 3: Run the Application**
+```bash
+python wsgi.py 'the serving entry point replacing app.py'
+```
+
+Now open your browser and visit 👉 http://0.0.0.0:8082
+
+---
+
+## 🧪 Project Flow
+```bash
+Data Ingestion → Data Validation → Data Transformation → Model Training → Model Evaluation → Prediction → Deployment
+```
+
+Each component is modularized and configurable, making the pipeline adaptable to new data or models without changing the codebase structure.
+
+---
+
+## 🌍 Deployment
+
+Deployed seamlessly on **Render**, containerized via **Docker** for scalability and reproducibility.
+
+**🔗 Live Application:** https://e2e-ml.onrender.com/
+
+---
+
+## 📘 Repository
+
+**🔗 GitHub Repo:** https://github.com/ihimanshu29/e2e_ML
+
+---
+
+## 🗂️ Project Structure
+```bash
+End-to-End-ML-Project/
+│
+├── .gitignore
+├── Dockerfile
+├── main.py
+├── params.yaml
+├── requirements.txt
+├── schema.yaml
+├── setup.py
+├── wsgi.py
+│
+├── artifacts/
+│   ├── data_ingestion/
+│   │   ├── data.zip
+│   │   └── winequality-red.csv
+│   ├── data_transformation/
+│   │   ├── train.csv
+│   │   └── test.csv
+│   ├── data_validation/
+│   │   └── status.txt
+│   ├── model_evaluation/
+│   │   └── metrics.json
+│   └── model_trainer/
+│       └── model.joblib
+│
+├── config/
+│   └── config.yaml
+│
+├── logs/
+│   ├── running_log.log
+│   └── running_log_old.log
+│
+├── research/
+│   ├── Expriement.ipynb
+│   └── trials.ipynb
+│
+├── src/
+│   └── mlProject/
+│       ├── __init__.py
+│       ├── components/
+│       │   ├── data_ingestion.py
+│       │   ├── data_transformation.py
+│       │   ├── data_validation.py
+│       │   ├── model_evaluation.py
+│       │   └── model_trainer.py
+│       ├── config/
+│       │   └── configuration.py
+│       ├── constants/
+│       │   └── __init__.py
+│       ├── entity/
+│       │   └── config_entity.py
+│       ├── pipeline/
+│       │   ├── prediction.py
+│       │   ├── stage_01_data_ingestion.py
+│       │   ├── stage_02_data_validation.py
+│       │   ├── stage_03_data_transformation.py
+│       │   ├── stage_04_model_trainer.py
+│       │   └── stage_05_model_evaluation.py
+│       └── utils/
+│           └── common.py
+│
+├── static/
+│   ├── assets/
+│   │   ├── favicon.ico
+│   │   └── img/
+│   │       └── form-v9.jpg
+│   ├── css/
+│   │   └── styles.css
+│   ├── css2/
+│   │   ├── nunito-font.css
+│   │   └── style.css
+│   └── js/
+│       └── scripts.js
+│
+└── templates/
+    ├── index.html
+    └── results.html
+```
+
+---
+
+## 💡 Key Highlights
+
+✅ Modular, production-style ML pipeline
+
+✅ Config-driven architecture
+
+✅ Integrated logging and exception handling
+
+✅ Containerized deployment (Docker + Render)
+
+✅ Demonstrates real-world data science engineering skills
+
+---
+
+## 🤝 Contributing
+
+Pull requests and feature suggestions are welcome!
+Feel free to fork the repo, create a branch, and submit a PR.
+
+---
+
+## 🧾 License
+
+Licensed under the MIT License – free to use, modify, and distribute.
+
+<p align="center">Made with ❤️ by <a href="https://github.com/ihimanshu29" target="_blank">Himanshu Awasthi</a></p> ```
+
+---
