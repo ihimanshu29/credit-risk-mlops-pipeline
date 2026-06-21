@@ -27,6 +27,9 @@ class ModelEvaluation:
         test_x = test_data.drop([self.config.target_column], axis=1)
         test_y = test_data[[self.config.target_column]]
         
+        mlflow.set_tracking_uri("http://127.0.0.1:5000")
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+        
         # Start MLflow tracking session
         with mlflow.start_run():
             predicted_status = model.predict(test_x)
@@ -43,5 +46,8 @@ class ModelEvaluation:
             mlflow.log_metric("f1_score", f1)
             
             # 3. Log Model binary with signatures directly to the MLflow Registry
-            # This demonstrates production-grade artifact governance
-            mlflow.sklearn.log_model(model, "model", registered_model_name="XGBoostCreditRiskModel")
+            # Model registry works perfectly now because the URI scheme is 'http'
+            if tracking_url_type_store != "file":
+                mlflow.sklearn.log_model(model, "model", registered_model_name="XGBoostCreditRiskModel")
+            else:
+                mlflow.sklearn.log_model(model, "model")

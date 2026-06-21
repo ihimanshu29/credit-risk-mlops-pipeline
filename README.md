@@ -1,241 +1,202 @@
-<h1 align="center">🍷 End-to-End Machine Learning Project: Wine Quality Prediction</h1>
+# <h1 align="center">🏦 RiskEngine AI: Production-Ready Credit Underwriting Pipeline</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" />
-  <img src="https://img.shields.io/badge/Framework-FastAPI-success.svg" />
-  <img src="https://img.shields.io/badge/Docker-Ready-informational.svg" />
-  <img src="https://img.shields.io/badge/Deployed%20on-Render-orange.svg" />
-</p>
-
-<p align="center">
-  <a href="https://e2e-ml.onrender.com/" target="_blank">
-    <img src="https://img.shields.io/badge/🌐%20Live%20App-Click%20Here-brightgreen?style=for-the-badge" />
-  </a>
-  <a href="https://github.com/ihimanshu29/e2e_ML" target="_blank">
-    <img src="https://img.shields.io/badge/🔗%20GitHub%20Repo-e2e__ML-blue?style=for-the-badge" />
-  </a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.10+-blue.svg" alt="Python 3.10+">
+  <a href="https://mlflow.org/"><img src="https://img.shields.io/badge/MLflow-Experiment_Tracking-0194E2.svg" alt="MLflow"></a>
+  <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-Containerized-2496ED.svg" alt="Docker"></a>
+  <a href="https://render.com"><img src="https://img.shields.io/badge/Render-Live_Deployment-46E3B7.svg" alt="Render"></a>
 </p>
 
 ---
 
-## 🧠 Overview
+## ⚡ Executive Summary & Overview
 
-This project demonstrates a **complete end-to-end Machine Learning workflow**, designed to replicate **industry-grade ML system design and architecture**.
+**RiskEngine AI** is an enterprise-grade, configuration-driven Machine Learning Operations (**MLOps**) production pipeline engineered to evaluate consumer credit risk and compute default probabilities. Powered by a high-performance **XGBoost** classification engine, this framework shifts machine learning away from isolated Jupyter notebooks into a resilient, **deployable, modular, and type-safe architecture**.
 
-The core objective is to **predict the quality of wine** based on various chemical and physical parameters such as acidity, sugar content, pH, and alcohol levels.  
-It goes far beyond a simple model training exercise — it represents a **production-ready ML pipeline**, from raw data ingestion to deployment.
-
----
-
-## 🎯 Purpose & Reflection
-
-This project was developed as a **portfolio piece** to showcase:
-- A **realistic, scalable ML architecture** that mirrors how enterprises design data and ML pipelines.
-- A demonstration of **how ML models move from experimentation to production**.
-- Use of **best practices** such as modularization, configuration management, logging, reproducibility, and containerized deployment.
-
-It emphasizes not just model accuracy, but **maintainability, traceability, and real-world readiness** — the true qualities of an industry-level ML project.
+By processing multi-dimensional financial features—such as borrower age, historical income dynamics, loan structures, and historical credit-line lengths—the pipeline serves real-time credit decisioning via a high-throughput **FastAPI** / **Flask** web application dashboard.
 
 ---
 
-## ⚙️ Workflow Steps
+## 🚀 Live Production Deployment
 
-1. Update configuration files (`config.yaml`, `schema.yaml`, `params.yaml`)
-2. Define entities and data schemas
-3. Configure pipeline stages via `ConfigurationManager`
-4. Implement modular components:
-   - Data Ingestion  
-   - Data Validation  
-   - Data Transformation  
-   - Model Training  
-   - Model Evaluation  
-5. Orchestrate all stages through the pipeline  
-6. Integrate with `main.py` and `wsgi.py` for full end-to-end execution  
-7. Deploy using Docker + Render  
+The entire inference application layer and frontend decisioning interface are fully containerized via **Docker** and actively orchestrating live workloads on **Render**.
+
+- **🔗 Production Gateway:** [Access the Underwriting Dashboard Here](https://your-render-url-here.onrender.com)
+- 💡 _Note: Infrastructure hosted on Render's standard tier may experience a brief 30–60 second cold-start latency during initial routing container spin-up._
 
 ---
 
-## 🧩 Tech Stack
+## 🧠 Core Engineering Differentiators & Reflection
 
-| Category | Tools / Technologies |
-|-----------|----------------------|
-| **Language** | Python 3.8+ |
-| **Framework** | FastAPI |
-| **ML Libraries** | scikit-learn, pandas, numpy, joblib |
-| **Environment** | Conda |
-| **Containerization** | Docker |
-| **Deployment** | Render |
-| **Version Control** | Git, GitHub |
+This system was meticulously built from the ground up to reflect modern production-grade architecture patterns, emphasizing clean separation of concerns and robust data governance:
+
+- **Configuration-Driven Architecture:** Complete elimination of hardcoded operational parameters. Every ingestion endpoint, validation rule, data split, and model hyperparameter is dynamically declared inside centralized `config.yaml` and `params.yaml` layers.
+- **Strict Type Safety & Schema Contracts:** Employs programmatic constraints using Python `@dataclass(frozen=True)` data transfer objects and strict `@ensure_annotations`. Any downstream data drifts or schema violations in `schema.yaml` instantly trigger explicit pipeline termination, neutralizing data corruption vectors before model poisoning can occur.
+- **Experiment Governance via MLflow:** Built-in tracking integration with **MLflow**. Pipeline iterations automatically serialize, register, and stream operational metrics (**Accuracy**, **Precision**, **Recall**, **F1-Score**), runtime hyperparameters, and active model binaries directly to a centralized tracking dashboard.
+- **Automated CI/CD Workflows:** Integrated with a **GitHub Actions** automation suite. Every codebase mutation triggers automated remote runners to enforce syntax validation, evaluate dependencies, and construct isolated test **Docker** container builds.
 
 ---
 
-## 🐳 Docker Support
+## ⚙️ Pipeline & Project Architecture
 
-This project is fully Dockerized for production-level deployment.
+### 📊 System Execution Architecture
 
-```bash
-# Build Docker image
-docker build -t e2e-ml .
+The underlying data and training flow operates through five fully decoupled, autonomous components:
 
-# Run the container
-docker run -p 8082:8082 e2e-ml
+```text
+🏁 Pipeline Ingestion Trigger
+       │
+       ▼
+ 📦 [01_Data_Ingestion]      ──► Fetches remote zipped payloads & extracts 'credit_risk.csv'
+       │
+       ▼
+ 🛡️ [02_Data_Validation]     ──► Validates structure against strict schema.yaml constraints
+       │
+       ▼
+ 🔄 [03_Data_Transformation] ──► Orchestrates train-test splits & handles numerical vectors
+       │
+       ▼
+ 🚀 [04_Model_Trainer]        ──► Ingests parameters, runs XGBoost, and serializes weights
+       │
+       ▼
+ 📈 [05_Model_Evaluation]     ──► Quantifies classification metrics & streams telemetry to MLflow
 ```
 
 ---
 
-## 💻 Local Setup
+## 🗂️ Complete Directory Topology
 
-**Step 1: Create Environment**
+```text
+credit-risk-mlops-pipeline/
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yaml         # GitHub Actions Workflow Engine
+├── artifacts/                  # Local Pipeline Versioned Storage
+│   ├── data_ingestion/        # Extracted credit_risk.csv source layer
+│   ├── data_validation/       # Schema evaluation compliance outputs
+│   ├── data_transformation/   # Prepared Model-Ready Partitions (train/test)
+│   ├── model_trainer/         # Serialized model.joblib binaries
+│   └── model_evaluation/      # Local telemetry outputs (metrics.json)
+├── config/
+│   └── config.yaml            # Monolithic Pipeline Component Registry
+├── src/
+│   └── mlProject/
+│       ├── components/        # Isolated Functional Execution Tasks
+│       ├── config/            # Internal Configuration Management Engines
+│       ├── entity/            # Strongly-Typed In-Memory Data Models
+│       ├── pipeline/          # Orchestrated Sequential Stage Controllers
+│       └── utils/             # High-Performance Common Core Utilities
+├── static/                    # Frontend UI Presentation Assets
+├── templates/                 # UI Execution Views (index.html, results.html)
+├── Dockerfile                 # Multi-Stage App Deployment Container Specs
+├── params.yaml                # XGBoost Model Hyperparameter Definitions
+├── schema.yaml                # Core Data Validation Schema Declarations
+├── requirements.txt           # Monitored Project Component Dependencies
+└── wsgi.py                    # High-Performance Application Gateway
+```
+
+---
+
+## 🛠️ Condensed Workflow Progression
+
+### 1. Declarative Updates
+
+Configure asset paths in `config.yaml`, tune XGBoost hyperparameters in `params.yaml`, and define columns in `schema.yaml`.
+
+### 2. Contract Construction
+
+Instantiate type-safe operational variables inside the internal `config_entity.py` domain.
+
+### 3. Component Engineering
+
+Program the core pipeline steps inside the isolated `components` catalog.
+
+### 4. Execution Orchestration
+
+Link execution blocks into isolated pipeline stages routed through `main.py`.
+
+### 5. UI & API Integration
+
+Bind predictive workflows to web endpoints within the service runner (`wsgi.py`).
+
+### 6. Containerization & Deployment
+
+Package the runtime dependencies via Docker and deploy to Render.
+
+---
+
+## 📈 Single-Line Operational Project Flow
+
+```text
+Data Ingestion ──► Structural Validation ──► Feature Transformation ──► XGBoost Optimization ──► MLflow Registration ──► API Inference Serving
+```
+
+---
+
+## 🧩 Unified Enterprise Tech Stack
+
+| Operational Domain      | Applied Technologies                              |
+| ----------------------- | ------------------------------------------------- |
+| Core Programming Engine | Python 3.10+                                      |
+| Model Optimization      | XGBoost (Extreme Gradient Boosting Classifier)    |
+| Data Orchestration      | Pandas, NumPy, Scikit-Learn, Joblib               |
+| Experiment Governance   | MLflow Tracking Server & Model Registry           |
+| Inference Framework     | Flask / FastAPI High-Performance Web Services     |
+| Runtime Environment     | Anaconda / Miniconda Package Ecosystem            |
+| Infrastructure & DevOps | Docker Engine, GitHub Actions CI/CD, Render Cloud |
+
+---
+
+## 💻 Local Setup & Development Environment
+
+### Step 1: Environment Provisioning
+
 ```bash
-conda create -n mlproj python=3.8 -y
+conda create -n mlproj python=3.10 -y
 conda activate mlproj
 ```
 
-**Step 2: Install Requirements**
+### Step 2: Dependency Synchronization
+
 ```bash
 pip install -r requirements.txt
 ```
 
-**Step 3: Run the Application**
+### Step 3: Launch Local Core Pipeline & Web Server
+
 ```bash
-python wsgi.py 'the serving entry point replacing app.py'
-```
-
-Now open your browser and visit 👉 http://0.0.0.0:8082
-
----
-
-## 🧪 Project Flow
-```bash
-Data Ingestion → Data Validation → Data Transformation → Model Training → Model Evaluation → Prediction → Deployment
-```
-
-Each component is modularized and configurable, making the pipeline adaptable to new data or models without changing the codebase structure.
-
----
-
-## 🌍 Deployment
-
-Deployed seamlessly on **Render**, containerized via **Docker** for scalability and reproducibility.
-
-**🔗 Live Application:** https://e2e-ml.onrender.com/
-
----
-
-## 📘 Repository
-
-**🔗 GitHub Repo:** https://github.com/ihimanshu29/e2e_ML
-
----
-
-## 🗂️ Project Structure
-```bash
-End-to-End-ML-Project/
-│
-├── .gitignore
-├── Dockerfile
-├── main.py
-├── params.yaml
-├── requirements.txt
-├── schema.yaml
-├── setup.py
-├── wsgi.py
-│
-├── artifacts/
-│   ├── data_ingestion/
-│   │   ├── data.zip
-│   │   └── winequality-red.csv
-│   ├── data_transformation/
-│   │   ├── train.csv
-│   │   └── test.csv
-│   ├── data_validation/
-│   │   └── status.txt
-│   ├── model_evaluation/
-│   │   └── metrics.json
-│   └── model_trainer/
-│       └── model.joblib
-│
-├── config/
-│   └── config.yaml
-│
-├── logs/
-│   ├── running_log.log
-│   └── running_log_old.log
-│
-├── research/
-│   ├── Expriement.ipynb
-│   └── trials.ipynb
-│
-├── src/
-│   └── mlProject/
-│       ├── __init__.py
-│       ├── components/
-│       │   ├── data_ingestion.py
-│       │   ├── data_transformation.py
-│       │   ├── data_validation.py
-│       │   ├── model_evaluation.py
-│       │   └── model_trainer.py
-│       ├── config/
-│       │   └── configuration.py
-│       ├── constants/
-│       │   └── __init__.py
-│       ├── entity/
-│       │   └── config_entity.py
-│       ├── pipeline/
-│       │   ├── prediction.py
-│       │   ├── stage_01_data_ingestion.py
-│       │   ├── stage_02_data_validation.py
-│       │   ├── stage_03_data_transformation.py
-│       │   ├── stage_04_model_trainer.py
-│       │   └── stage_05_model_evaluation.py
-│       └── utils/
-│           └── common.py
-│
-├── static/
-│   ├── assets/
-│   │   ├── favicon.ico
-│   │   └── img/
-│   │       └── form-v9.jpg
-│   ├── css/
-│   │   └── styles.css
-│   ├── css2/
-│   │   ├── nunito-font.css
-│   │   └── style.css
-│   └── js/
-│       └── scripts.js
-│
-└── templates/
-    ├── index.html
-    └── results.html
+python main.py   # Runs entire End-to-End MLOps Pipeline
+python wsgi.py   # Launches local development inference web interface
 ```
 
 ---
 
-## 💡 Key Highlights
+## 💡 Key Structural Highlights
 
-✅ Modular, production-style ML pipeline
+### Production Architecture Blueprint
 
-✅ Config-driven architecture
+Implements structural modularity mimicking enterprise data software frameworks.
 
-✅ Integrated logging and exception handling
+### Full-Lineage Reproducibility
 
-✅ Containerized deployment (Docker + Render)
+Every operational run yields mathematically identical, auditable results governed via configuration locks.
 
-✅ Demonstrates real-world data science engineering skills
+### Telemetry Insights
 
----
+Transparent evaluation layers tracking precision, recall curves, and model weights out-of-the-box.
 
-## 🤝 Contributing
+### Turnkey Deployment Ready
 
-Pull requests and feature suggestions are welcome!
-Feel free to fork the repo, create a branch, and submit a PR.
-
----
-
-## 🧾 License
-
-Licensed under the MIT License – free to use, modify, and distribute.
-
-<p align="center">Made with ❤️ by <a href="https://github.com/ihimanshu29" target="_blank">Himanshu Awasthi</a></p> ```
+Minimal cloud configurations required to transition from local testing environments straight to live production nodes.
 
 ---
+
+## 🧾 License & Personal Dedication
+
+This project is licensed under the MIT License—granting full authorization for modifications, business distribution, and private adaptation.
+
+### A Note from the Author
+
+This system serves as a showcase of modern MLOps principles, blending modern machine learning engineering with software craftsmanship.
+
+If this repository helped you scale your production deployment mental models, feel free to give it a ⭐!
