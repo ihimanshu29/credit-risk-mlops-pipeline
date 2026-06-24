@@ -22,3 +22,4 @@ pandas
 scipy
 matplotlib
 seaborn
+-e .
