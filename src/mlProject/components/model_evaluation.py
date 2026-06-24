@@ -27,8 +27,18 @@ class ModelEvaluation:
 
         test_x = test_data.drop([self.config.target_column], axis=1)
         test_y = test_data[[self.config.target_column]]
-        
+
+        #  DEFENSIVE TRACKING GATE: 
+        # Safely determine if we use the localhost server or a local directory
         mlflow.set_tracking_uri("http://127.0.0.1:5000")
+        try:
+            # Attempt a quick 1-second handshake with the local server
+            urllib.request.urlopen(default_tracking_uri, timeout=1)
+            mlflow.set_tracking_uri(default_tracking_uri)
+        except Exception:
+            # Fallback for GitHub Actions / Headless environments
+            mlflow.set_tracking_uri("file:./mlruns")
+            
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         
         # Start MLflow tracking session
