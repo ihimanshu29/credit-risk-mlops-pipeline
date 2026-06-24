@@ -1,5 +1,5 @@
-# Use a slim Python image for a stable base
-FROM python:3.9-slim
+# 1. Use Python 3.10 slim to perfectly match your pipeline runtime environment
+FROM python:3.10-slim
 
 # Set the environment variable to stop Python from buffering output
 ENV PYTHONUNBUFFERED=1
@@ -7,28 +7,25 @@ ENV PYTHONUNBUFFERED=1
 # Set the working directory
 WORKDIR /app
 
-# CRITICAL: Add the current directory to the PYTHONPATH so Python can find 'mlProject'
-ENV PYTHONPATH=/app/src:$PYTHONPATH
+# 2. Fix Docker Warning: Define PYTHONPATH directly without referencing its uninitialized self
+ENV PYTHONPATH=/app/src
 
-# Copy requirements and install dependencies
+# 3. Install essential Linux libraries required to compile/run heavy ML libraries like XGBoost
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements and upgrade package managers
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire project structure, including:
-# - wsgi.py (your app file)
-# - mlProject/ (your code module)
-# - templates/ (your HTML templates)
-# - artifacts/ (your trained model)
+# Copy the rest of the application code
 COPY . .
 
-# Expose the port (Render handles port mapping automatically)
-# We don't strictly need EXPOSE for Render, but it's good practice.
+# Expose the application port
 EXPOSE 10000 
 
-# Command to run your Flask app with Gunicorn (Industry Standard)
-# -w 4: 4 worker processes for concurrency
-# --bind 0.0.0.0:$PORT: Listens on the port provided by the Render environment variable
-# wsgi:app: Runs the 'app' Flask object found inside the 'wsgi.py' file.
-# CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:$PORT", "wsgi:app"]
-# Use the shell format to ensure $PORT is replaced with its value
+# Command to run your Flask app with Gunicorn (Shell form ensures $PORT replacement)
 CMD gunicorn --workers 4 --bind 0.0.0.0:$PORT wsgi:app
