@@ -11,3 +11,6 @@ logs/*.log
 # IDE files
 .vscode/
 .idea/
+mlruns/
+.pytest_cache
+mlartifacts/

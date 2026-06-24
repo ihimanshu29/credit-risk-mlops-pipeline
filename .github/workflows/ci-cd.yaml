@@ -23,12 +23,23 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install pytest  # Ensures pytest is available for the test runner
 
     - name: Code Linting & Syntax Verification
       run: |
         # Checks for syntax errors, undefined variables, and structural breaks
         # This acts as an automated quality gate before production deployment
         python -m compileall src/
+
+    # 👇 ADDED: Run the pipeline to generate the artifacts folder
+    - name: Run E2E ML Pipeline (Generate Artifacts)
+      run: |
+        python main.py
+
+    # 👇 ADDED: Run the actual tests and display verbose output
+    - name: Execute MLOps Quality Tests
+      run: |
+        pytest -v tests/test_pipeline.py
 
     - name: Verify Docker Container Build Environment
       run: |
