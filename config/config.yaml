@@ -1,25 +1,8 @@
 artifacts_root: artifacts
 
-# data_ingestion:
-#   root_dir: artifacts/data_ingestion
-#   source_URL: https://github.com/ihimanshu29/e2e_ML/raw/897a457c533d0fba01629368b4bdc89c2031d40d/research/data.zip
-
-#   local_data_file: artifacts/data_ingestion/data.zip
-#   unzip_dir: artifacts/data_ingestion
-
-# data_validation:
-#   root_dir: artifacts/data_validation
-#   unzip_data_dir: artifacts/data_ingestion/winequality-red.csv
-#   STATUS_FILE: artifacts/data_validation/status.txt
-
-# data_transformation:
-#   root_dir: artifacts/data_transformation
-#   data_path: artifacts/data_ingestion/winequality-red.csv
-
-# Update these specific blocks, leave the rest of the file as-is
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://github.com/ihimanshu29/production-ready-ml-pipeline/raw/ca8663b9f00970cf7d97afc8e598d2e10c7c2f43/research/credit_data.zip # Update with your new URL
+  source_URL: https://github.com/ihimanshu29/production-ready-ml-pipeline/raw/36d03b7f3f607a80a69f75aa57f2a341742a6117/research/credit_risk.zip # Update with your new URL
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
 

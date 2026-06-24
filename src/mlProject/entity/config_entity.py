@@ -11,12 +11,6 @@ class DataIngestionConfig:
 
 
 
-# @dataclass(frozen=True)
-# class DataValidationConfig:
-#     root_dir: Path
-#     STATUS_FILE: str
-#     unzip_data_dir: Path
-#     all_schema: dict
 @dataclass(frozen=True)
 class DataValidationConfig:
     root_dir:Path
@@ -29,6 +23,8 @@ class DataValidationConfig:
 class DataTransformationConfig:
     root_dir: Path
     data_path: Path
+    schema_columns: dict
+    target_column: str
 
 
 
@@ -41,6 +37,7 @@ class ModelTrainerConfig:
     n_estimators: int   
     max_depth: int         
     learning_rate: float
+    scale_pos_weight: float
     target_column: str
 
 

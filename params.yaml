@@ -1,8 +1,5 @@
-# ElasticNet:
-#   alpha: 0.2
-#   l1_ratio: 0.3
-#   random_state: 42
 XGBoost:
-  n_estimators: 100
-  max_depth: 5
-  learning_rate: 0.1
+  n_estimators: 200
+  max_depth: 6
+  learning_rate: 0.05
+  scale_pos_weight: 4.0

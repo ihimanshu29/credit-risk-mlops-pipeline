@@ -1,103 +1,310 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RiskEngine AI | Credit Risk Underwriting Pipeline</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
     </style>
-</head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
-
-    <header class="border-b border-slate-800 bg-slate-950/50 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="h-9 w-9 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-slate-950 text-xl tracking-tight">R</div>
-                <div>
-                    <span class="font-bold text-lg text-white tracking-wide">RiskEngine</span>
-                    <span class="text-xs block text-slate-400 font-mono -mt-1">v2.4.0-prod</span>
-                </div>
-            </div>
-            <div class="flex items-center space-x-4">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    XGBoost Pipeline Active
-                </span>
-            </div>
+  </head>
+  <body
+    class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between"
+  >
+    <header
+      class="border-b border-slate-800 bg-slate-950/50 backdrop-blur-md sticky top-0 z-50"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center space-x-3">
+          <div
+            class="h-9 w-9 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-slate-950 text-xl tracking-tight"
+          >
+            R
+          </div>
+          <div>
+            <span class="font-bold text-lg text-white tracking-wide"
+              >RiskEngine</span
+            >
+            <span class="text-xs block text-slate-400 font-mono -mt-1"
+              >v2.4.0-prod</span
+            >
+          </div>
         </div>
+        <div class="flex items-center space-x-4">
+          <span
+            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+          >
+            <span
+              class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-pulse"
+            ></span>
+            XGBoost Pipeline Active
+          </span>
+        </div>
+      </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-12 w-full flex-grow flex flex-col justify-center">
-        <div class="text-center mb-10">
-            <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-                Automated Credit Decisioning System
-            </h1>
-            <p class="mt-3 text-lg text-slate-400 max-w-xl mx-auto">
-                Input the operational applicant metrics below to calculate default probabilities via the deployed XGBoost classification model.
-            </p>
-        </div>
+    <main
+      class="max-w-4xl mx-auto px-4 py-12 w-full flex-grow flex flex-col justify-center"
+    >
+      <div class="text-center mb-10">
+        <h1
+          class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl"
+        >
+          Automated Credit Decisioning System
+        </h1>
+        <p class="mt-3 text-lg text-slate-400 max-w-xl mx-auto">
+          Input the operational applicant metrics below to calculate default
+          probabilities via the deployed XGBoost classification model.
+        </p>
+      </div>
 
-        <div class="bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl p-8 lg:p-10 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"></div>
-            
-            <form action="/predict" method="POST" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    <div>
-                        <label for="person_age" class="block text-sm font-semibold text-slate-300 mb-2">Applicant Age (Years)</label>
-                        <input type="number" id="person_age" name="person_age" min="18" max="100" required step="1"
-                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
-                            placeholder="e.g. 34">
-                    </div>
+      <div
+        class="bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl p-8 lg:p-10 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"
+        ></div>
 
-                    <div>
-                        <label for="person_income" class="block text-sm font-semibold text-slate-300 mb-2">Annual Gross Income ($)</label>
-                        <input type="number" id="person_income" name="person_income" min="1" required step="any"
-                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
-                            placeholder="e.g. 65000">
-                    </div>
+        <form action="/predict" method="POST" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label
+                for="person_age"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Applicant Age (Years)</label
+              >
+              <input
+                type="number"
+                id="person_age"
+                name="person_age"
+                min="18"
+                max="100"
+                required
+                step="1"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                placeholder="e.g. 34"
+              />
+            </div>
 
-                    <div>
-                        <label for="loan_amnt" class="block text-sm font-semibold text-slate-300 mb-2">Requested Loan Capital ($)</label>
-                        <input type="number" id="loan_amnt" name="loan_amnt" min="1" required step="any"
-                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
-                            placeholder="e.g. 15000">
-                    </div>
+            <div>
+              <label
+                for="person_income"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Annual Gross Income ($)</label
+              >
+              <input
+                type="number"
+                id="person_income"
+                name="person_income"
+                min="1"
+                required
+                step="any"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                placeholder="e.g. 65000"
+              />
+            </div>
 
-                    <div>
-                        <label for="loan_int_rate" class="block text-sm font-semibold text-slate-300 mb-2">Target Interest Rate (%)</label>
-                        <input type="number" id="loan_int_rate" name="loan_int_rate" min="0" max="100" required step="0.01"
-                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
-                            placeholder="e.g. 11.5">
-                    </div>
+            <div>
+              <label
+                for="person_home_ownership"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Home Ownership</label
+              >
+              <select
+                id="person_home_ownership"
+                name="person_home_ownership"
+                required
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              >
+                <option value="RENT">Rent</option>
+                <option value="MORTGAGE">Mortgage</option>
+                <option value="OWN">Own</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
 
-                    <div class="md:col-span-2">
-                        <label for="cb_person_cred_hist_length" class="block text-sm font-semibold text-slate-300 mb-2">Credit File Maturity (Years)</label>
-                        <input type="number" id="cb_person_cred_hist_length" name="cb_person_cred_hist_length" min="0" max="60" required step="1"
-                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
-                            placeholder="e.g. 7">
-                    </div>
+            <div>
+              <label
+                for="person_emp_length"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Employment Length (Years)</label
+              >
+              <input
+                type="number"
+                id="person_emp_length"
+                name="person_emp_length"
+                min="0"
+                max="60"
+                required
+                step="1"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                placeholder="e.g. 5"
+              />
+            </div>
 
-                </div>
+            <div>
+              <label
+                for="loan_intent"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Loan Intent</label
+              >
+              <select
+                id="loan_intent"
+                name="loan_intent"
+                required
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              >
+                <option value="PERSONAL">Personal</option>
+                <option value="EDUCATION">Education</option>
+                <option value="MEDICAL">Medical</option>
+                <option value="VENTURE">Venture</option>
+                <option value="HOMEIMPROVEMENT">Home Improvement</option>
+                <option value="DEBTCONSOLIDATION">Debt Consolidation</option>
+              </select>
+            </div>
 
-                <div class="pt-4">
-                    <button type="submit" 
-                        class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-base py-4 px-6 rounded-lg transition-all transform hover:-translate-y-0.5 shadow-lg shadow-emerald-500/20 active:translate-y-0">
-                        Execute Pipeline Inference
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div>
+              <label
+                for="loan_grade"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Assigned Loan Grade</label
+              >
+              <select
+                id="loan_grade"
+                name="loan_grade"
+                required
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              >
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                for="loan_amnt"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Requested Loan Capital ($)</label
+              >
+              <input
+                type="number"
+                id="loan_amnt"
+                name="loan_amnt"
+                min="1"
+                required
+                step="any"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                placeholder="e.g. 15000"
+              />
+            </div>
+
+            <div>
+              <label
+                for="loan_int_rate"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Target Interest Rate (%)</label
+              >
+              <input
+                type="number"
+                id="loan_int_rate"
+                name="loan_int_rate"
+                min="0"
+                max="100"
+                required
+                step="0.01"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                placeholder="e.g. 11.5"
+              />
+            </div>
+
+            <div>
+              <label
+                for="loan_percent_income"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Loan % of Income (0 to 1)</label
+              >
+              <input
+                type="number"
+                id="loan_percent_income"
+                name="loan_percent_income"
+                min="0"
+                max="1"
+                required
+                step="0.01"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                placeholder="e.g. 0.23"
+              />
+            </div>
+
+            <div>
+              <label
+                for="cb_person_default_on_file"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Historical Default?</label
+              >
+              <select
+                id="cb_person_default_on_file"
+                name="cb_person_default_on_file"
+                required
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              >
+                <option value="N">No (N)</option>
+                <option value="Y">Yes (Y)</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label
+                for="cb_person_cred_hist_length"
+                class="block text-sm font-semibold text-slate-300 mb-2"
+                >Credit File Maturity (Years)</label
+              >
+              <input
+                type="number"
+                id="cb_person_cred_hist_length"
+                name="cb_person_cred_hist_length"
+                min="0"
+                max="60"
+                required
+                step="1"
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                placeholder="e.g. 7"
+              />
+            </div>
+          </div>
+
+          <div class="pt-4">
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-base py-4 px-6 rounded-lg transition-all transform hover:-translate-y-0.5 shadow-lg shadow-emerald-500/20 active:translate-y-0"
+            >
+              Execute Pipeline Inference
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
 
-    <footer class="border-t border-slate-800 bg-slate-950/80 py-6 text-center text-xs text-slate-500 font-mono">
-        <div class="max-w-7xl mx-auto px-4">
-            Secured Internal Infrastructure | Analytical Modeling Group 2026
-        </div>
+    <footer
+      class="border-t border-slate-800 bg-slate-950/80 py-6 text-center text-xs text-slate-500 font-mono"
+    >
+      <div class="max-w-7xl mx-auto px-4">
+        Secured Internal Infrastructure | Analytical Modeling Group 2026
+      </div>
     </footer>
-
-</body>
+  </body>
 </html>

@@ -1,80 +1,157 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inference Report | RiskEngine AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
     </style>
-</head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
-
+  </head>
+  <body
+    class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between"
+  >
     <header class="border-b border-slate-800 bg-slate-950/50 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="h-9 w-9 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-slate-950 text-xl">R</div>
-                <span class="font-bold text-lg text-white tracking-wide">RiskEngine</span>
-            </div>
-            <span class="text-xs text-slate-500 font-mono">ID: {{ range(100000, 999999) | random }}</span>
+      <div
+        class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center space-x-3">
+          <div
+            class="h-9 w-9 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-slate-950 text-xl"
+          >
+            R
+          </div>
+          <span class="font-bold text-lg text-white tracking-wide"
+            >RiskEngine</span
+          >
         </div>
+        <span class="text-xs text-slate-500 font-mono"
+          >ID: {{ range(100000, 999999) | random }}</span
+        >
+      </div>
     </header>
 
-    <main class="max-w-2xl mx-auto px-4 py-16 w-full flex-grow flex flex-col justify-center">
-        <div class="bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl p-8 relative overflow-hidden text-center">
-            
-            <h2 class="text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">Model Decision Verdict</h2>
-            <h1 class="text-3xl font-extrabold text-white mb-6">Pipeline Evaluation Completed</h1>
+    <main
+      class="max-w-2xl mx-auto px-4 py-16 w-full flex-grow flex flex-col justify-center"
+    >
+      <div
+        class="bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl p-8 relative overflow-hidden text-center"
+      >
+        <h2
+          class="text-xs uppercase font-bold tracking-widest text-slate-400 mb-2"
+        >
+          Model Decision Verdict
+        </h2>
+        <h1 class="text-3xl font-extrabold text-white mb-6">
+          Pipeline Evaluation Completed
+        </h1>
 
-            <div class="my-8 p-6 rounded-xl border text-center transition-all">
-                {% if "High Risk" in prediction %}
-                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-rose-500/10 text-rose-500 mb-4 border border-rose-500/20">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                </div>
-                <div class="text-4xl font-black tracking-tight text-rose-500 mb-2">
-                    {{ prediction }}
-                </div>
-                <p class="text-sm text-slate-400 max-w-sm mx-auto">
-                    The evaluation metrics flag high exposure threshold anomalies. Loan origination is blocked via strict pipeline constraints.
-                </p>
-                {% else %}
-                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-500/10 text-emerald-400 mb-4 border border-emerald-500/20">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <div class="text-4xl font-black tracking-tight text-emerald-400 mb-2">
-                    {{ prediction }}
-                </div>
-                <p class="text-sm text-slate-400 max-w-sm mx-auto">
-                    Applicant parameters satisfy internal safety criteria. This request passes structural credit risk evaluation.
-                </p>
-                {% endif %}
-            </div>
-
-            <div class="border-t border-slate-800 pt-6 mt-6 text-left">
-                <h3 class="text-xs font-mono text-slate-500 uppercase tracking-wider mb-3">Audit Logs</h3>
-                <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 font-mono text-xs text-slate-400 space-y-1">
-                    <p><span class="text-emerald-500">✓</span> Classification Engine: XGBoost Classifier</p>
-                    <p><span class="text-emerald-500">✓</span> Feature Matrix Contract Shape: [1, 5]</p>
-                    <p><span class="text-emerald-500">✓</span> Schema Enforcement State: Operational</p>
-                </div>
-            </div>
-
-            <div class="mt-8">
-                <a href="/" class="inline-flex items-center justify-center w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 px-4 rounded-lg transition-all">
-                    Evaluate Next Profile
-                </a>
-            </div>
-
+        <div class="my-8 p-6 rounded-xl border text-center transition-all">
+          {% if "High Risk" in prediction %}
+          <div
+            class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-rose-500/10 text-rose-500 mb-4 border border-rose-500/20"
+          >
+            <svg
+              class="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              ></path>
+            </svg>
+          </div>
+          <div class="text-4xl font-black tracking-tight text-rose-500 mb-2">
+            {{ prediction }}
+          </div>
+          <p class="text-sm text-slate-400 max-w-sm mx-auto">
+            The evaluation metrics flag high exposure threshold anomalies. Loan
+            origination is blocked via strict pipeline constraints.
+          </p>
+          {% else %}
+          <div
+            class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-500/10 text-emerald-400 mb-4 border border-emerald-500/20"
+          >
+            <svg
+              class="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </div>
+          <div class="text-4xl font-black tracking-tight text-emerald-400 mb-2">
+            {{ prediction }}
+          </div>
+          <p class="text-sm text-slate-400 max-w-sm mx-auto">
+            Applicant parameters satisfy internal safety criteria. This request
+            passes structural credit risk evaluation.
+          </p>
+          {% endif %}
         </div>
+
+        <div class="border-t border-slate-800 pt-6 mt-6 text-left">
+          <h3
+            class="text-xs font-mono text-slate-500 uppercase tracking-wider mb-3"
+          >
+            Audit Logs
+          </h3>
+          <div
+            class="bg-slate-900 border border-slate-800 rounded-lg p-4 font-mono text-xs text-slate-400 space-y-1"
+          >
+            <p>
+              <span class="text-emerald-500">✓</span> Classification Engine:
+              XGBoost Classifier
+            </p>
+            <p>
+              <span class="text-emerald-500">✓</span> Feature Matrix Contract
+              Shape: [1, 11]
+            </p>
+            <p>
+              <span class="text-emerald-500">✓</span> Preprocessor Transformer
+              Active
+            </p>
+            <p>
+              <span class="text-emerald-500">✓</span> Schema Enforcement State:
+              Operational
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <a
+            href="/"
+            class="inline-flex items-center justify-center w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 px-4 rounded-lg transition-all"
+          >
+            Evaluate Next Profile
+          </a>
+        </div>
+      </div>
     </main>
 
-    <footer class="border-t border-slate-800 bg-slate-950/80 py-6 text-center text-xs text-slate-500 font-mono">
-        <div class="max-w-7xl mx-auto px-4">
-            Secured Internal Infrastructure | Analytical Modeling Group 2026
-        </div>
+    <footer
+      class="border-t border-slate-800 bg-slate-950/80 py-6 text-center text-xs text-slate-500 font-mono"
+    >
+      <div class="max-w-7xl mx-auto px-4">
+        Secured Internal Infrastructure | Analytical Modeling Group 2026
+      </div>
     </footer>
-
-</body>
+  </body>
 </html>

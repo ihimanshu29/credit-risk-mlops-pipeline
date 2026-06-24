@@ -21,19 +21,32 @@ By processing multi-dimensional financial features—such as borrower age, histo
 
 The entire inference application layer and frontend decisioning interface are fully containerized via **Docker** and actively orchestrating live workloads on **Render**.
 
-- **🔗 Production Gateway:** [Access the Underwriting Dashboard Here](https://your-render-url-here.onrender.com)
+- **🔗 Production Gateway:** [Access the Underwriting Dashboard Here](https://credit-risk-mlops-pipeline-ign4.onrender.com)
 - 💡 _Note: Infrastructure hosted on Render's standard tier may experience a brief 30–60 second cold-start latency during initial routing container spin-up._
 
 ---
 
-## 🧠 Core Engineering Differentiators & Reflection
+## 🧠 Core Engineering Architecture & MLOps Capabilities
 
-This system was meticulously built from the ground up to reflect modern production-grade architecture patterns, emphasizing clean separation of concerns and robust data governance:
+This system was meticulously architected from the ground up to mirror **production-grade enterprise MLOps patterns**, emphasizing clean **separation of concerns**, strict **data governance**, and extreme resilience against **data drift** and pipeline degradation.
 
-- **Configuration-Driven Architecture:** Complete elimination of hardcoded operational parameters. Every ingestion endpoint, validation rule, data split, and model hyperparameter is dynamically declared inside centralized `config.yaml` and `params.yaml` layers.
-- **Strict Type Safety & Schema Contracts:** Employs programmatic constraints using Python `@dataclass(frozen=True)` data transfer objects and strict `@ensure_annotations`. Any downstream data drifts or schema violations in `schema.yaml` instantly trigger explicit pipeline termination, neutralizing data corruption vectors before model poisoning can occur.
-- **Experiment Governance via MLflow:** Built-in tracking integration with **MLflow**. Pipeline iterations automatically serialize, register, and stream operational metrics (**Accuracy**, **Precision**, **Recall**, **F1-Score**), runtime hyperparameters, and active model binaries directly to a centralized tracking dashboard.
-- **Automated CI/CD Workflows:** Integrated with a **GitHub Actions** automation suite. Every codebase mutation triggers automated remote runners to enforce syntax validation, evaluate dependencies, and construct isolated test **Docker** container builds.
+---
+
+### 🚀 Key Technical Pillars
+
+* **Configuration-Driven Architecture & Decoupling:** Complete elimination of hardcoded operational parameters. Every data ingestion endpoint, validation rule, train-test splitting ratio, and model hyperparameter (e.g., `scale_pos_weight`) is dynamically declared inside centralized `config.yaml` and `params.yaml` layers. This abstracts **execution logic away from the raw data infrastructure**, allowing seamless structural modifications with **zero code refactoring**.
+
+* **Strict Type Safety & Schema Enforcement Contracts:** Implements runtime programmatic constraints using Python `@dataclass(frozen=True)` **Data Transfer Objects (DTOs)** coupled with strict `@ensure_annotations` verification. By validating incoming data matrices against an immutable `schema.yaml` definition, the system acts as a rigid **structural gatekeeper**—instantly halting execution upon detecting unexpected features or data type mutations, effectively neutralizing **data corruption vectors** before **model poisoning** can occur.
+
+* **Two-Tier Data Quality Governance (Validation vs. Adaptive Healing):** Designed a sophisticated decoupling between data monitoring and pre-processing. The **Data Validation** stage isolates structural anomalies (missing or corrupted columns) as fatal pipeline exceptions. Conversely, the **Data Transformation** stage serves as an **adaptive healing layer**—automatically handling statistical anomalies, dynamically imputing missing numerical/categorical values via customized **Scikit-Learn Pipelines**, and programmatically filtering out biological outliers (e.g., `age > 100`).
+
+* **Unbreakable Feature Lineage & Explicit Data Contracts:** Successfully mitigated the systemic industry challenge where Scikit-Learn matrix transformations silently strip Pandas metadata and shuffle index positions during **One-Hot Encoding** and scaling. By engineering an explicit naming contract using `get_feature_names_out()`, the pipeline guarantees that the downstream **XGBoost Classifier** trains on mathematically accurate, **labeled feature matrices** rather than implicit array slices (`[:, :-1]`), entirely eliminating **silent alignment drift**.
+
+* **Enterprise Experiment Governance via MLflow:** Engineered built-in, production-ready experiment tracking to continuously stream pipeline run state metrics (**Accuracy**, **Precision**, **Recall**, **F1-Score**), operational hyperparameters, and serialized binaries directly into the **MLflow Tracking Server** and centralized **Model Registry**. The codebase features an **adaptive networking schema**, capable of gracefully transitioning between localized file-based tracking (`mlruns`) and active remote server environments via native **URI parsing**.
+
+* **Resilient Remote Ingestion & Artifact Lifecycle Management:** Built a fault-tolerant automated data ingestion module tailored to manage remote network exceptions and binary zip lifecycles. Designed to handle real-world edge cases (such as parsing raw binary data blocks vs. GitHub UI HTML layers), the module programmatically ensures automated **data provenance**, extracts compressed multi-column CSVs, and maps **dynamic file paths** to downstream tracking dependencies without manual human intervention.
+
+* **Modular Orchestration & Automated CI/CD Workflows:** Structured using clean, production-ready **Object-Oriented Programming (OOP)** patterns where distinct steps are isolated into individual components and orchestrated seamlessly by a singular `main.py` entry point. The entire repository is tightly integrated with a **GitHub Actions** automation suite; every codebase mutation triggers automated remote runners to enforce syntax validation, evaluate dependencies, and construct isolated test **Docker** container builds for **continuous deployment**.
 
 ---
 
@@ -61,6 +74,16 @@ The underlying data and training flow operates through five fully decoupled, aut
        ▼
  📈 [05_Model_Evaluation]     ──► Quantifies classification metrics & streams telemetry to MLflow
 ```
+---
+
+### MlFlow Snapshot
+![alt text](image.png)
+
+### 🛡️ Enterprise Data Governance & Quality Assurance
+
+* **Multi-Stage Data Validation Engine:** Upgraded the pipeline from basic structural column checks to an active validation layer enforcing null-value constraints and strict logical domain boundaries (e.g., isolating impossible financial records and out-of-bounds demographic ranges before downstream training runs).
+* **Automated Quality Gateways (CI/CD Integration):** Implemented a rigorous test suite using `pytest` to mechanically verify data integrity, partition split balances, and target binary classification constraints (`0` or `1` enforcement).
+* **Defensive Deployment Strategy:** Programmed automated unit tests directly into the **GitHub Actions workflow**. The CI/CD engine acts as a production gatekeeper—instantly blocking broken container builds from deploying to the cloud if a data mutation or structural failure is detected.
 
 ---
 
@@ -88,6 +111,9 @@ credit-risk-mlops-pipeline/
 │       └── utils/             # High-Performance Common Core Utilities
 ├── static/                    # Frontend UI Presentation Assets
 ├── templates/                 # UI Execution Views (index.html, results.html)
+├── tests/                     # Automated MLOps Quality Testing Framework
+│   ├── __init__.py            # Explicit namespace initializer for test discovery
+│   └── test_pipeline.py       # Core structural validation, split balance, and label sanity unit tests
 ├── Dockerfile                 # Multi-Stage App Deployment Container Specs
 ├── params.yaml                # XGBoost Model Hyperparameter Definitions
 ├── schema.yaml                # Core Data Validation Schema Declarations
@@ -168,28 +194,16 @@ pip install -r requirements.txt
 python main.py   # Runs entire End-to-End MLOps Pipeline
 python wsgi.py   # Launches local development inference web interface
 ```
+### Step 4: Execute Automated MLOps & Data Contracts Tests
+To programmatically verify data ingestion schemas, transformation splitting integrity, and target column boundary conditions locally before committing changes, execute the test suite using pytest:
+
+```bash
+# Run all data and pipeline unit tests with verbose logging
+pytest -v tests/test_pipeline.py
+```
 
 ---
 
-## 💡 Key Structural Highlights
-
-### Production Architecture Blueprint
-
-Implements structural modularity mimicking enterprise data software frameworks.
-
-### Full-Lineage Reproducibility
-
-Every operational run yields mathematically identical, auditable results governed via configuration locks.
-
-### Telemetry Insights
-
-Transparent evaluation layers tracking precision, recall curves, and model weights out-of-the-box.
-
-### Turnkey Deployment Ready
-
-Minimal cloud configurations required to transition from local testing environments straight to live production nodes.
-
----
 
 ## 🧾 License & Personal Dedication
 

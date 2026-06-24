@@ -8,6 +8,7 @@ import mlflow
 import mlflow.sklearn
 from urllib.parse import urlparse
 
+
 class ModelEvaluation:
     def __init__(self, config: ModelEvaluationConfig):
         self.config = config

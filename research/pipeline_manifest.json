@@ -1,0 +1,81 @@
+{
+  "created_at": "2026-06-23T11:33:32.064830",
+  "dataset": "credit_risk_dataset.csv",
+  "pipeline_file": "credit_risk_preprocessor.pkl",
+  "splits": {
+    "train": {
+      "rows": 22801,
+      "default_rate": 21.819
+    },
+    "val": {
+      "rows": 4886,
+      "default_rate": 21.817
+    },
+    "test": {
+      "rows": 4887,
+      "default_rate": 21.813
+    }
+  },
+  "feature_count": 32,
+  "feature_names": [
+    "numerical__person_age",
+    "numerical__person_income",
+    "numerical__person_emp_length",
+    "numerical__loan_amnt",
+    "numerical__loan_int_rate",
+    "numerical__loan_percent_income",
+    "numerical__cb_person_cred_hist_length",
+    "numerical__log_person_income",
+    "numerical__log_loan_amnt",
+    "numerical__loan_to_monthly_income",
+    "numerical__dti_grade_stress",
+    "numerical__income_loan_ratio",
+    "numerical__interest_to_income",
+    "numerical__credit_vulnerability_index",
+    "numerical__age_at_credit_start",
+    "numerical__credit_hist_to_age_ratio",
+    "numerical__emp_stability_score",
+    "categorical__person_home_ownership_OTHER",
+    "categorical__person_home_ownership_OWN",
+    "categorical__person_home_ownership_RENT",
+    "categorical__loan_intent_EDUCATION",
+    "categorical__loan_intent_HOMEIMPROVEMENT",
+    "categorical__loan_intent_MEDICAL",
+    "categorical__loan_intent_PERSONAL",
+    "categorical__loan_intent_VENTURE",
+    "categorical__loan_grade_B",
+    "categorical__loan_grade_C",
+    "categorical__loan_grade_D",
+    "categorical__loan_grade_E",
+    "categorical__loan_grade_F",
+    "categorical__loan_grade_G",
+    "categorical__cb_person_default_on_file_Y"
+  ],
+  "numerical_cols": [
+    "person_age",
+    "person_income",
+    "person_emp_length",
+    "loan_amnt",
+    "loan_int_rate",
+    "loan_percent_income",
+    "cb_person_cred_hist_length",
+    "log_person_income",
+    "log_loan_amnt",
+    "loan_to_monthly_income",
+    "dti_grade_stress",
+    "income_loan_ratio",
+    "interest_to_income",
+    "credit_vulnerability_index",
+    "age_at_credit_start",
+    "credit_hist_to_age_ratio",
+    "emp_stability_score"
+  ],
+  "categorical_cols": [
+    "person_home_ownership",
+    "loan_intent",
+    "loan_grade",
+    "cb_person_default_on_file"
+  ],
+  "target": "loan_status",
+  "notes": "Pipeline fit on train only. Transform val/test separately to prevent leakage."
+}

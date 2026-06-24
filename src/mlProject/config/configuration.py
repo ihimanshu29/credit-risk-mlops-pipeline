@@ -66,6 +66,8 @@ class ConfigurationManager:
         data_transformation_config = DataTransformationConfig(
             root_dir=config.root_dir,
             data_path=config.data_path,
+            schema_columns=self.schema.COLUMNS,
+            target_column=self.schema.TARGET_COLUMN.name
         )
 
         return data_transformation_config
@@ -87,6 +89,7 @@ class ConfigurationManager:
             n_estimators = params.n_estimators,
             max_depth = params.max_depth,
             learning_rate = params.learning_rate,
+            scale_pos_weight = params.scale_pos_weight,
             target_column = schema.name
             
         )
