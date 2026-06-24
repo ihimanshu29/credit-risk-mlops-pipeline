@@ -37,7 +37,7 @@ class ModelEvaluation:
             mlflow.set_tracking_uri(default_tracking_uri)
         except Exception:
             # Fallback for GitHub Actions / Headless environments
-            mlflow.set_tracking_uri("file:./mlruns")
+            mlflow.set_tracking_uri("sqlite:///mlflow.db")
             
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         
