@@ -13,7 +13,7 @@
 
 **RiskEngine AI** is an enterprise-grade, configuration-driven Machine Learning Operations (**MLOps**) production pipeline engineered to evaluate consumer credit risk and compute default probabilities. Powered by a high-performance **XGBoost** classification engine, this framework shifts machine learning away from isolated Jupyter notebooks into a resilient, **deployable, modular, and type-safe architecture**.
 
-By processing multi-dimensional financial features—such as borrower age, historical income dynamics, loan structures, and historical credit-line lengths—the pipeline serves real-time credit decisioning via a high-throughput **FastAPI** / **Flask** web application dashboard.
+By processing multi-dimensional financial features—such as borrower age, historical income dynamics, loan structures, and historical credit-line lengths—the pipeline serves real-time credit decisioning via a high-throughput web application dashboard.
 
 ---
 
@@ -30,7 +30,6 @@ The entire inference application layer and frontend decisioning interface are fu
 
 This system was meticulously architected from the ground up to mirror **production-grade enterprise MLOps patterns**, emphasizing clean **separation of concerns**, strict **data governance**, and extreme resilience against **data drift** and pipeline degradation.
 
----
 
 ### 🚀 Key Technical Pillars
 
