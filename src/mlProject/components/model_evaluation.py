@@ -59,6 +59,15 @@ class ModelEvaluation:
             # 3. Log Model binary with signatures directly to the MLflow Registry
             # Model registry works perfectly now because the URI scheme is 'http'
             if tracking_url_type_store != "file":
-                mlflow.sklearn.log_model(model, "model", registered_model_name="XGBoostCreditRiskModel")
+                mlflow.sklearn.log_model(
+                    model, 
+                    "model", 
+                    registered_model_name="XGBoostCreditRiskModel",
+                    skops_trusted_types=my_trusted_models
+                )
             else:
-                mlflow.sklearn.log_model(model, "model")
+                mlflow.sklearn.log_model(
+                    model, 
+                    "model",
+                    skops_trusted_types=my_trusted_models
+                )
