@@ -1,0 +1,9 @@
+# 1. Hide Jupyter Notebooks from the language bar
+*.ipynb linguist-detectable=false
+
+# 2. Hide frontend UI code from the language bar
+templates/* linguist-vendored
+static/* linguist-vendored
+
+# 3. (Optional) Force config files to count as Python
+*.yaml linguist-language=Python
